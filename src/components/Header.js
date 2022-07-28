@@ -13,7 +13,7 @@ export default function Header() {
   );
 }
 
-const StyledHeader = styled.Header`
+const StyledHeader = styled.header`
 	width: 100%;
 	height: 67px;
 	left: 0px;

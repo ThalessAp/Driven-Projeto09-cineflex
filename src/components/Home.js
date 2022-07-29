@@ -52,6 +52,7 @@ const Movie = styled.div`
 	height: 210px;
 	row-gap: 30px;
 	column-gap: 20px;
+	margin: 15px;
 `;
 const Poster = styled.div`
 	width: 145px;

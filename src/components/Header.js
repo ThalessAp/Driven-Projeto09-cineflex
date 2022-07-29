@@ -14,11 +14,14 @@ export default function Header() {
 }
 
 const StyledHeader = styled.header`
+	top: 0px;
+	left: 0px;
 	width: 100%;
 	height: 67px;
-	left: 0px;
-	top: 0px;
 	background-color: #c3cfd9;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 `;
 const Title = styled.h1`
 	font-family: "Roboto";
@@ -28,4 +31,7 @@ const Title = styled.h1`
 	align-items: center;
 	text-align: center;
 	color: #e8833a;
+
+	align-content: center;
+	justify-content: center;
 `;

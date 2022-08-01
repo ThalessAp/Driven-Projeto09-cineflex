@@ -1,37 +1,34 @@
 // Rota:  /
-
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 
-export default function Home({ movies, setMovies }) {
-	const { idFilme } = useParams();
+export default function Home({ movies, setMovies, API, setApi }) {
 	return (
 		<>
-			<div className="title" >
-				<Title>Selecione o filme</Title>
+			<div className="title">
+				<Subtitle>Selecione o filme</Subtitle>
 			</div>
 			<Movie>
-				<div className="movie">
-					{movies.map((movie) => {
-						return (
-							<>
-								<Link to={`/sessoes/${idFilme}`}>
+				{movies.map((movie) => {
+					return (
+						<>
+							<div className="movie" onClick={() =>
+							{setApi (API , `${movie.id}/showtimes`)}}>
+								<Link to={`/sessoes/${movie.id}`}>
 									<Poster>
-										<div className="poster">
-											<img src={movie.posterURL} alt={movie.title} />
-										</div>
+										<img src={movie.posterURL} alt={movie.title} />
 									</Poster>
 								</Link>
-							</>
-						);
-					})}
-				</div>
+							</div>
+						</>
+					);
+				})}
 			</Movie>
 		</>
 	);
 }
 
-const Title = styled.h2`
+const Subtitle = styled.h2`
 	font-family: "Roboto";
 	font-style: normal;
 	font-weight: 400;
@@ -44,18 +41,31 @@ const Title = styled.h2`
 	height: 110px;
 `;
 const Movie = styled.div`
-	/* FIXME Revisar essa cor dps */
-	background-color: red;
-	box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.1);
-	border-radius: 3px;
-	width: 150px;
-	height: 210px;
-	row-gap: 30px;
-	column-gap: 20px;
-	margin: 15px;
+	max-width: 100%;
+
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+
+	div {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		background-color: #fff;
+		box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.1);
+		border-radius: 3px;
+
+		max-width: 150px;
+		max-height: 210px;
+		margin: 15px;
+	}
 `;
 const Poster = styled.div`
-	width: 145px;
-	height: 205px;
-	background: url(movie.posterURL);
+
+
+	img {
+		max-width: 145px;
+		max-height: 205px;
+	}
 `;

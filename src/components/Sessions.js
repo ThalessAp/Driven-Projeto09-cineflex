@@ -1,10 +1,10 @@
 // Rota /sessoes/${idFilme}
-
 import axios from "axios";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 import Footer from "./Footer";
 
-export default function Sessions({ ApiUrl, sessions, setSessions }) {
+export default function Sessions({ Api, sessions, setSessions }) {
 	const { movie, setMovie } = useState({
 		title: "{sessions.title}",
 		posterURL: "{ sessions.posterURL }",
@@ -21,7 +21,7 @@ export default function Sessions({ ApiUrl, sessions, setSessions }) {
 	}
 
 	useEffect(() => {
-		const promisse = axios.get({ ApiUrl });
+		const promisse = axios.get({ Api });
 		promisse
 			.then((response) => {
 				setSessions(response.data);
@@ -33,7 +33,7 @@ export default function Sessions({ ApiUrl, sessions, setSessions }) {
 
 	return (
 		<>
-			<h2>Selecione o horario</h2>
+			<Subtitle>Selecione o horario</Subtitle>
 
 			<li>
 				{sessions.days.map((session) => {
@@ -41,7 +41,7 @@ export default function Sessions({ ApiUrl, sessions, setSessions }) {
 						<>
 							<div className="weekDay">
 								<span>
-									<h3>{session.weekday}</h3>-<h3>{session.date}</h3>
+									<Date>{session.weekday}</Date>-<Date>{session.date}</Date>
 								</span>
 								<span>
 									{session.showtimes.map((showtime) => {
@@ -52,9 +52,9 @@ export default function Sessions({ ApiUrl, sessions, setSessions }) {
 													onClick={() => {
 														setTime(showtime.weekday, showtime.name);
 													}}>
-													<div className="time">
+													<Showtime>
 														<div>{showtime.name}</div>
-													</div>
+													</Showtime>
 												</div>
 											</>
 										);
@@ -69,3 +69,41 @@ export default function Sessions({ ApiUrl, sessions, setSessions }) {
 		</>
 	);
 }
+
+const Subtitle = styled.h2`
+	font-family: "Roboto";
+	font-style: normal;
+	font-weight: 400;
+	font-size: 24px;
+	align-items: center;
+	text-align: center;
+	color: #293845;
+
+	width: 100%;
+	height: 110px;
+`;
+const Date = styled.h3`
+	font-family: "Roboto";
+	font-style: normal;
+	font-weight: 400;
+	font-size: 20px;
+	line-height: 23px;
+	display: flex;
+	align-items: center;
+	letter-spacing: 0.02em;
+
+	color: #293845;
+`;
+const Showtime = styled.div`
+	width: 85px;
+	height: 45px;
+	background: #e8833a;
+	border-radius: 3px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	div{
+		color: #fff;
+	}
+`;

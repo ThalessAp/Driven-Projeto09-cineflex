@@ -8,13 +8,14 @@ import Seats from "./Seats.js";
 const axios = require("axios").default;
 
 export default function App() {
-	const ApiUrl = "https://mock-api.driven.com.br/api/v5/cineflex/";
+	const ApiUrl = "https://mock-api.driven.com.br/api/v7/cineflex";
 
+	const [url, setUrl] = useState(`${ApiUrl}`);
 	const [movies, setMovies] = useState([]);
 	const [sessions, setSessions] = useState([]);
 
 	useEffect(() => {
-		const promisse = axios.get({ ApiUrl });
+		const promisse = axios.get(`${url}/movies`);
 		promisse
 			.then((response) => {
 				setMovies(response.data);
@@ -23,6 +24,11 @@ export default function App() {
 				console.log("deu ruim");
 			});
 	}, []);
+
+	function toogleSession(Api, page) {
+		setUrl(`${Api}/${page}`);	
+
+	}
 
 	return (
 		<>
@@ -37,7 +43,8 @@ export default function App() {
 						path="/sessoes/:idFilme/"
 						element={
 							<Sessions
-								API={ApiUrl}
+								Api={url} 
+								setApi={toogleSession}
 								sessions={sessions}
 								setSessions={setSessions}
 							/>
@@ -45,8 +52,14 @@ export default function App() {
 					/>
 					<Route
 						path="showtimes/:idSession/seats"
-						element={<Seats />}
-						/>
+						element={
+							<Seats
+								API={ApiUrl}
+								sessions={sessions}
+								setSessions={setSessions}
+							/>
+						}
+					/>
 				</Routes>
 			</BrowserRouter>
 		</>
